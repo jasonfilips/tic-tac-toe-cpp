@@ -10,6 +10,7 @@ char digits[3][3] = { {'1','2','3'},{'4','5','6'},{'7','8','9'} };
 char winnerToken = '0';
 char token = 'x';
 bool tie = false;
+bool winner = false;
 int score1 = 0;
 int score2 = 0;
 int ties = 0;
@@ -30,19 +31,40 @@ void DrawTable(char digits[3][3]) {
 bool CheckWinner(char digits[3][3]) {
     for (int i = 0; i < 3; i++) {
         if (digits[i][0] == digits[i][1] && digits[i][0] == digits[i][2]){
-            if (digits[i][0] == 'x') score1++;
-            else  score2++;
-            return true;
+            if (digits[i][0] == 'x') {
+                score1++;
+                winnerToken = 'x';
+            }
+            else {
+                score2++;
+                winnerToken = '0';
+            } 
+            winner = true;
+            return winner;
         }
         else if (digits[0][i] == digits[1][i] && digits[0][i] == digits[2][i]) {
-            if (digits[0][i] == 'x') score1++;
-            else  score2++;
-            return true;
+            if (digits[0][i] == 'x') {
+                score1++;
+                winnerToken = 'x';
+            }
+            else {
+                score2++;
+                winnerToken = '0';
+            }
+            winner = true;
+            return winner;
         }
         if (digits[0][0] == digits[1][1] && digits[1][1] == digits[2][2] || digits[0][2] == digits[1][1] && digits[1][1] == digits[2][0]) {
-            if (digits[1][1] == 'x') score1++;
-            else  score2++;
-            return true;
+            if (digits[1][1] == 'x') {
+                score1++;
+                winnerToken = 'x';
+            }
+            else {
+                score2++;
+                winnerToken = '0';
+            }
+            winner = true;
+            return winner;
         }
     }
 
@@ -60,23 +82,50 @@ bool CheckWinner(char digits[3][3]) {
 }
 
 void GameLoop(char digits[3][3]) {
-    system("clear"); //Linux clear screen
-    system("cls");  //Windows clear screen
-
-    cout << "Current score:" + player1 + '=' + to_string(score1) + ", " + player2 + "=" + to_string(score2) + ", " + "Ties=" + to_string(ties) + "." << endl;
-
-    if (CheckWinner(digits)) {
-        cout << "Congratulations!" << endl;
-    }
-    if (tie) {
-        cout << "TIE!" << endl;
-    }
-
-    DrawTable(digits);
-
     int row;
     int column;
     int digit;
+    int n = 49;
+
+    system("clear"); //Linux clear screen
+    system("cls");  //Windows clear screen
+    CheckWinner(digits);
+
+    cout << "Current score:" + player1 + '=' + to_string(score1) + ", " + player2 + "=" + to_string(score2) + ", " + "Ties=" + to_string(ties) + "." << endl;
+
+    if (winner) {
+        if (winnerToken == 'x') {
+            cout << "Congratulations to " + player1 + "! You Won!" << endl;
+        }
+        else {
+            cout << "Congratulations to " + player2 + "! You Won!" << endl;
+        }
+    }
+    if (tie) {
+        cout << "IT'S A TIE!" << endl;
+    }
+    if (winner || tie) {
+        winner = false;
+        tie = false;
+        cout << "Would you like to continue? [1]Yes [2]No" << endl;
+        cin >> digit;
+        switch (digit) {
+        case 1:
+            
+            for (int i = 0;i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    digits[i][j] = char(n);
+                    n++;
+                }
+            }
+            break;
+        default:
+            return;
+        }
+        
+    }
+
+    DrawTable(digits);
 
     //try {
 
