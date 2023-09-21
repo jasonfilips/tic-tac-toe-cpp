@@ -2,14 +2,19 @@
 //
 
 #include <iostream>
+#include <string>
 #include <conio.h>
 using namespace std;
 
 char digits[3][3] = { {'1','2','3'},{'4','5','6'},{'7','8','9'} };
+char winnerToken = '0';
 char token = 'x';
 bool tie = false;
-string player1;
-string player2;
+int score1 = 0;
+int score2 = 0;
+int ties = 0;
+string player1 = "player1";
+string player2 = "player2";
 
 
 void DrawTable(char digits[3][3]) {
@@ -24,25 +29,32 @@ void DrawTable(char digits[3][3]) {
 
 bool CheckWinner(char digits[3][3]) {
     for (int i = 0; i < 3; i++) {
-        if (digits[i][0] == digits[i][1] && digits[i][0] == digits[i][2] || digits[0][i] == digits[1][i] && digits[0][i] == digits[2][i]){ 
-            cout << "Congratulations!1" << endl;
+        if (digits[i][0] == digits[i][1] && digits[i][0] == digits[i][2]){
+            if (digits[i][0] == 'x') score1++;
+            else  score2++;
             return true;
-            
+        }
+        else if (digits[0][i] == digits[1][i] && digits[0][i] == digits[2][i]) {
+            if (digits[0][i] == 'x') score1++;
+            else  score2++;
+            return true;
         }
         if (digits[0][0] == digits[1][1] && digits[1][1] == digits[2][2] || digits[0][2] == digits[1][1] && digits[1][1] == digits[2][0]) {
-            cout << "Congratulations!2" << endl;
+            if (digits[1][1] == 'x') score1++;
+            else  score2++;
             return true;
-            
         }
     }
 
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
             if (digits[i][j] != 'x' && digits[i][j] != '0') {
+                
                 return false;
             }
         }
     }
+    ties++;
     tie = true;
     return false;
 }
@@ -51,8 +63,10 @@ void GameLoop(char digits[3][3]) {
     system("clear"); //Linux clear screen
     system("cls");  //Windows clear screen
 
+    cout << "Current score:" + player1 + '=' + to_string(score1) + ", " + player2 + "=" + to_string(score2) + ", " + "Ties=" + to_string(ties) + "." << endl;
+
     if (CheckWinner(digits)) {
-        cout << "Congratulations!3" << endl;
+        cout << "Congratulations!" << endl;
     }
     if (tie) {
         cout << "TIE!" << endl;
@@ -64,18 +78,26 @@ void GameLoop(char digits[3][3]) {
     int column;
     int digit;
 
+    //try {
+
     if (token == 'x') {
         cout << endl;
-        cout << "Please enter a correspoinding digit for " + player1 + ":";
+        cout << "Enter a correspoinding digit for " + player1 + " (X):";
         cin >> digit;
         cout << endl;
     }
     if (token == '0') {
         cout << endl;
-        cout << "Please enter a correspoinding digit for player '0':";
+        cout << "Enter a correspoinding digit for " + player2 + " (0):";
         cin >> digit;
         cout << endl;
     }
+
+    /* }
+    catch (exception) {
+        cout << "Wrong Character";
+        GameLoop(digits);
+    }*/
 
     if (digit == 1) {
         row = 0;
@@ -135,8 +157,10 @@ void GameLoop(char digits[3][3]) {
 
 int main()
 {
-    cout << "Please enter a name for player 1:";
+    cout << "Enter a name for player 1:";
     cin >> player1;
+    cout << "Enter a name for player 2:";
+    cin >> player2;
 
     GameLoop(digits);
 }
