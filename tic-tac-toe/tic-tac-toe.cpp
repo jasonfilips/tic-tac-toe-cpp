@@ -1,5 +1,5 @@
 // tic-tac-toe.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
+// TO DO: implement a try catch for incorrect input
 
 #include <iostream>
 #include <string>
@@ -17,15 +17,15 @@ int ties = 0;
 string player1 = "player1";
 string player2 = "player2";
 
-
 void DrawTable(char digits[3][3]) {
-    cout << "\n";
+    cout << endl;
     cout << "  " << digits[0][0] << " | " << digits[0][1] << " | " << digits[0][2] << endl;
     cout << " ___|___|___" << endl;
     cout << "  " << digits[1][0] << " | " << digits[1][1] << " | " << digits[1][2] << endl;
     cout << " ___|___|___" << endl;
     cout << "  " << digits[2][0] << " | " << digits[2][1] << " | " << digits[2][2] << endl;
     cout << "    |   |   " << endl;
+    cout << endl;
 }
 
 bool CheckWinner(char digits[3][3]) {
@@ -67,7 +67,6 @@ bool CheckWinner(char digits[3][3]) {
             return winner;
         }
     }
-
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
             if (digits[i][j] != 'x' && digits[i][j] != '0') {
@@ -90,7 +89,7 @@ void GameLoop(char digits[3][3]) {
     system("clear"); //Linux clear screen
     system("cls");  //Windows clear screen
     CheckWinner(digits);
-
+    
     cout << "Current score:" + player1 + '=' + to_string(score1) + ", " + player2 + "=" + to_string(score2) + ", " + "Ties=" + to_string(ties) + "." << endl;
 
     if (winner) {
@@ -111,7 +110,6 @@ void GameLoop(char digits[3][3]) {
         cin >> digit;
         switch (digit) {
         case 1:
-            
             for (int i = 0;i < 3; i++) {
                 for (int j = 0; j < 3; j++) {
                     digits[i][j] = char(n);
@@ -122,70 +120,58 @@ void GameLoop(char digits[3][3]) {
         default:
             return;
         }
-        
     }
 
     DrawTable(digits);
 
-    //try {
-
     if (token == 'x') {
-        cout << endl;
-        cout << "Enter a correspoinding digit for " + player1 + " (X):";
+        cout << "Enter a correspoinding digit(1-9) for " + player1 + " (X):";
         cin >> digit;
-        cout << endl;
     }
     if (token == '0') {
-        cout << endl;
-        cout << "Enter a correspoinding digit for " + player2 + " (0):";
+        cout << "Enter a correspoinding digit(1-9) for " + player2 + " (0):";
         cin >> digit;
-        cout << endl;
     }
-
-    /* }
-    catch (exception) {
-        cout << "Wrong Character";
+    
+    switch (digit) {
+    case 1:
+        row = 0;
+        column = 0;
+        break;
+    case 2:
+        row = 0;
+        column = 1;
+        break;
+    case 3:
+        row = 0;
+        column = 2;
+        break;
+    case 4:
+        row = 1;
+        column = 0;
+        break;
+    case 5:
+        row = 1;
+        column = 1;
+        break;
+    case 6:
+        row = 1;
+        column = 2;
+        break;
+    case 7:
+        row = 2;
+        column = 0;
+        break;
+    case 8:
+        row = 2;
+        column = 1;
+        break;
+    case 9:
+        row = 2;
+        column = 2;
+        break;
+    default:
         GameLoop(digits);
-    }*/
-
-    if (digit == 1) {
-        row = 0;
-        column = 0;
-    }
-    else if (digit == 2) {
-        row = 0;
-        column = 1;
-    }
-    else if (digit == 3) {
-        row = 0;
-        column = 2;
-    }
-    else if (digit == 4) {
-        row = 1;
-        column = 0;
-    }
-    else if (digit == 5) {
-        row = 1;
-        column = 1;
-    }
-    else if (digit == 6) {
-        row = 1;
-        column = 2;
-    }
-    else if (digit == 7) {
-        row = 2;
-        column = 0;
-    }
-    else if (digit == 8) {
-        row = 2;
-        column = 1;
-    }
-    else if (digit == 9) {
-        row = 2;
-        column = 2;
-    }
-    else if (digit < 1 || digit > 9) {
-        cout << "Wrong digit" << endl;
     }
 
     if (token == 'x' && digits[row][column] != 'x' && digits[row][column] != '0') {
@@ -200,7 +186,7 @@ void GameLoop(char digits[3][3]) {
         cout << "That's a wrong space" << endl;
         GameLoop(digits);
     }
-
+    
     GameLoop(digits);
 }
 
