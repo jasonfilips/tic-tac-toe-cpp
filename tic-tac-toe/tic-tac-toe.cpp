@@ -2,11 +2,15 @@
 //
 
 #include <iostream>
+#include <conio.h>
 using namespace std;
 
 char digits[3][3] = { {'1','2','3'},{'4','5','6'},{'7','8','9'} };
 char token = 'x';
 bool tie = false;
+string player1;
+string player2;
+
 
 void DrawTable(char digits[3][3]) {
     cout << "\n";
@@ -18,20 +22,59 @@ void DrawTable(char digits[3][3]) {
     cout << "    |   |   " << endl;
 }
 
+bool CheckWinner(char digits[3][3]) {
+    for (int i = 0; i < 3; i++) {
+        if (digits[i][0] == digits[i][1] && digits[i][0] == digits[i][2] || digits[0][i] == digits[1][i] && digits[0][i] == digits[2][i]){ 
+            cout << "Congratulations!1" << endl;
+            return true;
+            
+        }
+        if (digits[0][0] == digits[1][1] && digits[1][1] == digits[2][2] || digits[0][2] == digits[1][1] && digits[1][1] == digits[2][0]) {
+            cout << "Congratulations!2" << endl;
+            return true;
+            
+        }
+    }
+
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            if (digits[i][j] != 'x' && digits[i][j] != '0') {
+                return false;
+            }
+        }
+    }
+    tie = true;
+    return false;
+}
+
 void GameLoop(char digits[3][3]) {
+    system("clear"); //Linux clear screen
+    system("cls");  //Windows clear screen
+
+    if (CheckWinner(digits)) {
+        cout << "Congratulations!3" << endl;
+    }
+    if (tie) {
+        cout << "TIE!" << endl;
+    }
+
+    DrawTable(digits);
 
     int row;
     int column;
     int digit;
 
     if (token == 'x') {
-        cout << "please enter";
+        cout << endl;
+        cout << "Please enter a correspoinding digit for " + player1 + ":";
         cin >> digit;
+        cout << endl;
     }
-
     if (token == '0') {
-        cout << "Please Enter";
+        cout << endl;
+        cout << "Please enter a correspoinding digit for player '0':";
         cin >> digit;
+        cout << endl;
     }
 
     if (digit == 1) {
@@ -70,7 +113,6 @@ void GameLoop(char digits[3][3]) {
         row = 2;
         column = 2;
     }
-
     else if (digit < 1 || digit > 9) {
         cout << "Wrong digit" << endl;
     }
@@ -88,22 +130,16 @@ void GameLoop(char digits[3][3]) {
         GameLoop(digits);
     }
 
-    DrawTable(digits);
     GameLoop(digits);
 }
 
 int main()
 {
+    cout << "Please enter a name for player 1:";
+    cin >> player1;
 
     GameLoop(digits);
 }
-
-
-
-
-
-
-
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
 // Debug program: F5 or Debug > Start Debugging menu
