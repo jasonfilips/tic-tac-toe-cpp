@@ -125,11 +125,11 @@ void GameLoop(char digits[3][3]) {
     DrawTable(digits);
 
     if (token == 'x') {
-        cout << "Enter a correspoinding digit(1-9) for " + player1 + " (X):";
+        cout << "Enter a corresponding digit(1-9) for " + player1 + " (X):";
         cin >> digit;
     }
     if (token == '0') {
-        cout << "Enter a correspoinding digit(1-9) for " + player2 + " (0):";
+        cout << "Enter a corresponding digit(1-9) for " + player2 + " (0):";
         cin >> digit;
     }
     
